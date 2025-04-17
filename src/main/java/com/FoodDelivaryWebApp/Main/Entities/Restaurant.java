@@ -1,9 +1,12 @@
 package com.FoodDelivaryWebApp.Main.Entities;
 
+import java.util.List;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -24,6 +27,22 @@ public class Restaurant {
 	@NotNull
 	private String city;
 	
+	@ManyToMany
+	@JoinTable(
+		name = "restaurant_menu",
+	    joinColumns = @JoinColumn(name = "menu_id"),
+	    inverseJoinColumns = @JoinColumn(name = "restaurant_id")
+	)
+	private List<MenuItem> menuItems;
+	
+	public List<MenuItem> getMenuItems() {
+		return menuItems;
+	}
+
+	public void setMenuItems(List<MenuItem> menuItems) {
+		this.menuItems = menuItems;
+	}
+
 	@Override
 	public String toString() {
 		return "Restaurant [restaurantId=" + restaurantId + ", restaurantName=" + restaurantName
